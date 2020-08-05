@@ -25,12 +25,15 @@ reaXMLElement = do
   symbol $ pure openAngularBraceToken
   n <- reaXMLName
   a <- many reaXMLAttribute
-  symbol $ pure closeAngularBraceToken
-  c <- reaXMLTree
-  symbol openAngularBraceSlashTokens
-  symbol n
-  symbol $ pure closeAngularBraceToken
-  pure $ ReaXMLElement n a c
+  cs <- (symbol slashCloseAngularBraceToken >> pure [])
+    <|> do
+      symbol $ pure closeAngularBraceToken
+      cs <- reaXMLTree
+      symbol openAngularBraceSlashTokens
+      symbol n
+      symbol $ pure closeAngularBraceToken
+      pure cs
+  pure $ ReaXMLElement n a cs
 
 reaXMLAttribute :: Parser ReaXMLAttribute
 reaXMLAttribute = do

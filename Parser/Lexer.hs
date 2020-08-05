@@ -14,7 +14,7 @@ encodedString :: Parser String
 encodedString = many $ noneOf [openAngularBraceToken, closeAngularBraceToken]
 
 quotedString :: Parser String
-quotedString = qString '"' <|> qString '\''
+quotedString = qString doubleQuoteToken <|> qString singleQuoteToken
   where
    qString :: Char -> Parser String
    qString q = TPC.char q *> many (TPC.satisfy (/= q)) <* TPC.char q
@@ -25,6 +25,20 @@ symbol = lexeme . void . TPC.string
 lexeme :: Parser a -> Parser a
 lexeme x = x <* TPC.spaces
 
+-- Char Token(s)
+
+openAngularBraceSlashTokens :: String
+openAngularBraceSlashTokens = openAngularBraceToken : slashToken : []
+
+slashCloseAngularBraceToken :: String
+slashCloseAngularBraceToken = slashToken : closeAngularBraceToken : []
+
+singleQuoteToken :: Char
+singleQuoteToken = '\''
+
+doubleQuoteToken :: Char
+doubleQuoteToken = '"'
+
 openCurlyBraceToken :: Char
 openCurlyBraceToken = '{'
 
@@ -34,11 +48,11 @@ closeCurlyBraceToken = '}'
 openAngularBraceToken :: Char
 openAngularBraceToken = '<'
 
-openAngularBraceSlashTokens :: String
-openAngularBraceSlashTokens = openAngularBraceToken : '/' : []
-
 closeAngularBraceToken :: Char
 closeAngularBraceToken = '>'
+
+slashToken :: Char
+slashToken = '/'
 
 equalToken :: Char
 equalToken = '='
