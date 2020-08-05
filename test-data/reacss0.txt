@@ -1,0 +1,10 @@
+#input
+{ HaHa; }
+{ TestRule }
+{}
+{
+  This one has more than one declarations;
+  See?;
+  There is three!
+}
+#output

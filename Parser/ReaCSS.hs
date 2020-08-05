@@ -30,12 +30,14 @@ reaCSSSelector = do
 reaCSSBlock :: Parser ReaCSSBlock
 reaCSSBlock = do
   symbol $ pure openCurlyBraceToken
-  ds <- sepBy reaCSSDeclaration (symbol $ pure semicolonToken)
+  ds <- sepEndBy reaCSSDeclaration (symbol $ pure semicolonToken)
   symbol $ pure closeCurlyBraceToken
   pure $ ReaCSSBlock ds
 
 reaCSSDeclaration :: Parser ReaCSSDeclaration
-reaCSSDeclaration = pure SyntaxForThisIsNotClearYet
+reaCSSDeclaration = do
+  skipMany $ noneOf [openCurlyBraceToken, semicolonToken, closeCurlyBraceToken]
+  pure SyntaxForThisIsNotClearYet
 
 reaCSSName :: Parser ReaCSSName
 reaCSSName = lexeme identifier
