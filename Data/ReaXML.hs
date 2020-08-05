@@ -2,8 +2,8 @@
 {-# Language RecordWildCards #-}
 module Data.ReaXML where
 
-import Prelude hiding ((<>))
-import Text.PrettyPrint.HughesPJClass
+import Prelude
+import Text.PrettyPrint.HughesPJClass hiding ((<>))
 
 newtype ReaXML
   = ReaXML ReaXMLTree
