@@ -2,7 +2,7 @@
 {-# Language RecordWildCards #-}
 module Data.ReaXML where
 
-import Text.PrettyPrint.HughesPJClass hiding ((<>))
+import Text.PrettyPrint.ReaCSSExtension
 
 newtype ReaXML
   = ReaXML ReaXMLTree
@@ -77,6 +77,3 @@ instance Pretty ReaXMLElement where
 instance Pretty ReaXMLAttribute where
   pPrint ReaXMLAttribute{..}
     = text reaXMLAttributeName <> equals <> doubleQuotes (text reaXMLAttributeValue)
-
-vsep :: [Doc] -> Doc
-vsep = foldr ($+$) empty

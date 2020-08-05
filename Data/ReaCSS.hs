@@ -3,7 +3,7 @@
 module Data.ReaCSS where
 
 import Data.List
-import Text.PrettyPrint.HughesPJClass hiding ((<>))
+import Text.PrettyPrint.ReaCSSExtension
 
 newtype ReaCSS
   = ReaCSS [ReaCSSRule]
@@ -63,6 +63,3 @@ instance Pretty ReaCSSBlock where
 
 instance Pretty ReaCSSDeclaration where
   pPrint SyntaxForThisIsNotClearYet = "decl"
-
-vsep :: [Doc] -> Doc
-vsep = foldr ($+$) empty
