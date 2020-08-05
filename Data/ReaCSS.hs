@@ -6,7 +6,11 @@ newtype ReaCSS
            )
 
 data ReaCSSRule
-  = ReaCSSRule ReaCSSSelector [ReaCSSBlock] ReaCSSSelector
+  = ReaCSSRule
+    { reaCSSRuleFromSelector :: ReaCSSSelector
+    , reaCSSRuleBlocks :: [ReaCSSBlock]
+    , reaCSSRuleToSelector :: ReaCSSSelector
+    }
   deriving ( Show
            )
 

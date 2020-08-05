@@ -30,7 +30,7 @@ reaCSSSelector = do
 reaCSSBlock :: Parser ReaCSSBlock
 reaCSSBlock = do
   symbol $ pure openCurlyBraceToken
-  ds <- many reaCSSDeclaration
+  ds <- sepBy reaCSSDeclaration (symbol $ pure semicolonToken)
   symbol $ pure closeCurlyBraceToken
   pure $ ReaCSSBlock ds
 

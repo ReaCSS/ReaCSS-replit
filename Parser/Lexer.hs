@@ -39,6 +39,9 @@ singleQuoteToken = '\''
 doubleQuoteToken :: Char
 doubleQuoteToken = '"'
 
+semicolonToken :: Char
+semicolonToken = ';'
+
 openCurlyBraceToken :: Char
 openCurlyBraceToken = '{'
 
