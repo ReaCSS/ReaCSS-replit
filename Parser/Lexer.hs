@@ -10,8 +10,8 @@ import qualified Text.Parsec.Char as TPC
 identifier :: Parser String
 identifier = (:) <$> TPC.letter <*> many TPC.alphaNum
 
-encodedString :: Parser String
-encodedString = many $ noneOf [openAngularBraceToken, closeAngularBraceToken]
+encodedString1 :: Parser String
+encodedString1 = many1 $ noneOf [openAngularBraceToken, closeAngularBraceToken]
 
 quotedString :: Parser String
 quotedString = qString doubleQuoteToken <|> qString singleQuoteToken

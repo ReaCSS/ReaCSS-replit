@@ -18,12 +18,13 @@ reaXMLNode
   <|> ReaXMLElementNode <$> reaXMLElement
 
 reaXMLText :: Parser ReaXMLText
-reaXMLText = encodedString
+reaXMLText = encodedString1
 
 reaXMLElement :: Parser ReaXMLElement
 reaXMLElement = do
-  symbol $ pure openAngularBraceToken
-  n <- reaXMLName
+  n <- try $ do
+    symbol $ pure openAngularBraceToken
+    reaXMLName
   a <- many reaXMLAttribute
   cs <- (symbol slashCloseAngularBraceToken >> pure [])
     <|> do
