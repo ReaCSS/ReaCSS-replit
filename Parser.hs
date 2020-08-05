@@ -1,4 +1,4 @@
 module Parser where
 
+import Parser.ReaCSS
 import Parser.ReaXML
-import Text.Parsec

@@ -9,12 +9,27 @@ type ReaXMLTree
   = [ReaXMLNode]
 
 data ReaXMLNode
-  = ReaXMLNode ReaXMLNodeName ReaXMLAttributes ReaXMLTree
+  = ReaXMLElementNode ReaXMLElement
+  | ReaXMLTextNode ReaXMLText
   deriving ( Show
            )
 
-type ReaXMLNodeName = String
+data ReaXMLElement
+  = ReaXMLElement ReaXMLName ReaXMLAttributes ReaXMLTree
+  deriving ( Show
+           )
+
+type ReaXMLText = String
 
 type ReaXMLAttributes = [ReaXMLAttribute]
 
-type ReaXMLAttribute = String
+data ReaXMLAttribute
+  = ReaXMLAttribute
+    { reaXMLAttributeName :: ReaXMLName
+    , reaXMLAttributeValue :: ReaXMLValue
+    }
+  deriving ( Show
+           )
+
+type ReaXMLName = String
+type ReaXMLValue = String
