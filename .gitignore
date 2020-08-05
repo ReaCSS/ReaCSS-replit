@@ -1,0 +1,6 @@
+# Haskell
+*.o
+*.hi
+
+# Main
+main
