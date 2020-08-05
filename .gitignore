@@ -2,5 +2,6 @@
 *.o
 *.hi
 
-# Main
-main
+# Build results
+/build/**
+/main
