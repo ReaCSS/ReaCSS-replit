@@ -4,7 +4,12 @@
   <NoWay value="work" />
   <Nested node="check">
     <OneMOUR inner="Noode">
-      <YAS NOOD="NOOD" />
+      <YAS NOOD="NOOD" with="really" many="attributes" that="make" pretty="printer" craaaaaaaaaaaaaaaasy="IASSSSSSSSSSSSSSSSSSSSSSSSSSSS" />
     </OneMOUR>
   </Nested>
+  <How about="this" long="opening tag" nerf="this" you='crispy' bard="tarte" what="a delicious!">
+    <OtherText>
+      Text Text Text
+    </OtherText>
+  </How>
 </ReaXML>
