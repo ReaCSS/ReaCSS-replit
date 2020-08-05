@@ -1,1 +1,1 @@
-run="ghc -o main -odir build -hidir build Main.hs && ./main"
+run="ghc -o main -odir build -hidir build main.hs && ./main"
