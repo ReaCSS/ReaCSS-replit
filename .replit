@@ -1,1 +1,2 @@
-run="ghc -o main -odir build -hidir build main.hs && ./main"
+language="haskell"
+run="cabal v2-run ReaCSS"
