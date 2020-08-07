@@ -2,9 +2,9 @@ module Parser where
 
 import Parser.ReaCSS
 import Parser.ReaXML
-import Text.Parsec
-import Text.Parsec.String
-import Text.PrettyPrint.HughesPJClass (Pretty, prettyShow)
+import Text.Megaparsec
+import Prettyprinter (Pretty, pretty)
+import Prettyprinter.Util (putDocW)
 
 testReaCSS :: FilePath -> IO ()
 testReaCSS = testParserWithFile reaCSS
@@ -17,4 +17,4 @@ testParserWithFile p fp = do
   str <- readFile fp
   case parse p fp str of
     Left err -> print err
-    Right v -> putStrLn $ prettyShow v
+    Right v -> putDocW 80 $ pretty v

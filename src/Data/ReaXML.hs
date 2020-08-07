@@ -2,7 +2,7 @@
 {-# Language RecordWildCards #-}
 module Data.ReaXML where
 
-import Text.PrettyPrint.ReaCSSExtension
+import Prettyprinter
 
 newtype ReaXML
   = ReaXML ReaXMLTree
@@ -44,36 +44,38 @@ type ReaXMLValue = String
 
 -- Pretty printers
 instance Pretty ReaXML where
-  pPrint (ReaXML reaXMLTree) = vsep (pPrint <$> reaXMLTree)
+  pretty (ReaXML reaXMLTree) = vsep (pretty <$> reaXMLTree)
 
 instance Pretty ReaXMLNode where
-  pPrint (ReaXMLTextNode reaXMLText) = text reaXMLText
-  pPrint (ReaXMLElementNode reaXMLElement) = pPrint reaXMLElement
+  pretty (ReaXMLTextNode reaXMLText) = pretty reaXMLText
+  pretty (ReaXMLElementNode reaXMLElement) = pretty reaXMLElement
 
 instance Pretty ReaXMLElement where
-  pPrint ReaXMLElement{..}
+  pretty ReaXMLElement{..}
     = if null reaXMLElementChildren
       then
         sep
-        [ "<" <> text reaXMLElementName
-        , nest 2 attributes
+        [ "<" <> pretty reaXMLElementName
+        , indent 2 attributes
         , "/>"
         ]
       else
-        cat
-        [
-          sep
-          [ "<" <> text reaXMLElementName
-          , nest 2 attributes
+        vsep
+        [ cat
+          [
+            sep
+            [ "<" <> pretty reaXMLElementName
+            , indent 2 attributes
+            ]
+          , ">"
           ]
-        , ">"
+        , indent 2 children
+        , "</" <> pretty reaXMLElementName <> ">"
         ]
-        $+$ nest 2 children
-        $+$ "</" <> text reaXMLElementName <> ">"
     where
-      attributes = sep (pPrint <$> reaXMLElementAttributes)
-      children = vsep (pPrint <$> reaXMLElementChildren)
+      attributes = sep (pretty <$> reaXMLElementAttributes)
+      children = vsep (pretty <$> reaXMLElementChildren)
 
 instance Pretty ReaXMLAttribute where
-  pPrint ReaXMLAttribute{..}
-    = text reaXMLAttributeName <> equals <> doubleQuotes (text reaXMLAttributeValue)
+  pretty ReaXMLAttribute{..}
+    = pretty reaXMLAttributeName <> equals <> dquotes (pretty reaXMLAttributeValue)

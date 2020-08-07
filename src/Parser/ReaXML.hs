@@ -1,10 +1,11 @@
-module Parser.ReaXML where
+module Parser.ReaXML
+  ( module Parser.ReaXML
+  , module Parser.Lexer
+  ) where
 
 import Data.ReaXML
 import Parser.Lexer
-import Text.Parsec
-import Text.Parsec.Combinator
-import Text.Parsec.String
+import Text.Megaparsec
 
 reaXML :: Parser ReaXML
 reaXML = ReaXML <$> reaXMLTree <* eof

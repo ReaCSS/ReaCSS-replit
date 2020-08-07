@@ -1,29 +1,34 @@
 module Parser.Lexer where
 
 import Control.Monad
-import Text.Parsec
-import Text.Parsec.Combinator
-import Text.Parsec.String
+import Data.Void
+import Text.Megaparsec
 
-import qualified Text.Parsec.Char as TPC
+import qualified Text.Megaparsec.Char as TM
+import qualified Text.Megaparsec.Char.Lexer as TML
+
+type Parser = Parsec Void String
 
 identifier :: Parser String
-identifier = (:) <$> TPC.letter <*> many TPC.alphaNum
+identifier = (:) <$> TM.letterChar <*> many TM.alphaNumChar
 
 encodedString1 :: Parser String
-encodedString1 = many1 $ noneOf [openAngularBraceToken, closeAngularBraceToken]
+encodedString1 = some $ noneOf [openAngularBraceToken, closeAngularBraceToken]
 
 quotedString :: Parser String
 quotedString = qString doubleQuoteToken <|> qString singleQuoteToken
   where
    qString :: Char -> Parser String
-   qString q = TPC.char q *> many (TPC.satisfy (/= q)) <* TPC.char q
+   qString q = TM.char q *> many (satisfy (/= q)) <* TM.char q
 
 symbol :: String -> Parser ()
-symbol = lexeme . void . TPC.string
+symbol = lexeme . void . TM.string
 
 lexeme :: Parser a -> Parser a
-lexeme x = x <* TPC.spaces
+lexeme = TML.lexeme sc
+
+sc :: Parser ()
+sc = void TM.space
 
 -- Char Token(s)
 

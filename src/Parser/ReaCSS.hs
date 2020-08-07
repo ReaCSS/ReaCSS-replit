@@ -1,13 +1,11 @@
-module Parser.ReaCSS where
+module Parser.ReaCSS
+  ( module Parser.ReaCSS
+  , module Parser.Lexer
+  ) where
 
-import Control.Monad
 import Data.ReaCSS
 import Parser.Lexer
-import Text.Parsec
-import Text.Parsec.Combinator
-import Text.Parsec.String
-
-import qualified Text.Parsec.Char as TPC
+import Text.Megaparsec
 
 reaCSS :: Parser ReaCSS
 reaCSS = ReaCSS <$> many reaCSSRule
@@ -21,11 +19,11 @@ reaCSSRule = do
 
 reaCSSSelector :: Parser ReaCSSSelector
 reaCSSSelector = do
-  c <- TPC.anyChar
+  c <- anySingle
   case c of
     '#' -> ReaCSSIdSelector <$> reaCSSName
     '.' -> ReaCSSClassSelector <$> reaCSSName
-    _ -> unexpected $ "The selector should start with '#' or '.', but it starts with '" <> pure c <> "'."
+    _ -> fail $ "The selector should start with '#' or '.', but it starts with '" <> pure c <> "'."
 
 reaCSSBlock :: Parser ReaCSSBlock
 reaCSSBlock = do

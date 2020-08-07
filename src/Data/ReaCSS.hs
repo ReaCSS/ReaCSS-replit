@@ -3,7 +3,7 @@
 module Data.ReaCSS where
 
 import Data.List
-import Text.PrettyPrint.ReaCSSExtension
+import Prettyprinter
 
 newtype ReaCSS
   = ReaCSS [ReaCSSRule]
@@ -39,27 +39,28 @@ type ReaCSSName = String
 
 -- Pretty printers
 instance Pretty ReaCSS where
-  pPrint (ReaCSS rules)
-    = vsep
-      (intersperse "" (pPrint <$> rules))
+  pretty (ReaCSS rules)
+    = concatWith (\x y -> x <> hardline <> hardline <> y) (pretty <$> rules)
 
 instance Pretty ReaCSSRule where
-  pPrint ReaCSSRule{..}
-    = pPrint reaCSSRuleFromSelector
-    $+$ vsep (pPrint <$> reaCSSRuleBlocks)
-    $+$ pPrint reaCSSRuleToSelector
+  pretty ReaCSSRule{..}
+    = sep
+      ( [pretty reaCSSRuleFromSelector]
+      <> (pretty <$> reaCSSRuleBlocks)
+      <> [pretty reaCSSRuleToSelector]
+      )
 
 instance Pretty ReaCSSSelector where
-  pPrint (ReaCSSIdSelector idSelector) = "#" <> text idSelector
-  pPrint (ReaCSSClassSelector classSelector) = "." <> text classSelector
+  pretty (ReaCSSIdSelector idSelector) = "#" <> pretty idSelector
+  pretty (ReaCSSClassSelector classSelector) = "." <> pretty classSelector
 
 instance Pretty ReaCSSBlock where
-  pPrint (ReaCSSBlock decls) =
-    sep
-    [ "{"
-    , nest 2 (sep (punctuate ";" (pPrint <$> decls)))
-    , "}"
-    ]
+  pretty (ReaCSSBlock decls)
+    = sep
+      [ "{"
+      , indent 2 (sep (punctuate ";" (pretty <$> decls)))
+      , "}"
+      ]
 
 instance Pretty ReaCSSDeclaration where
-  pPrint SyntaxForThisIsNotClearYet = "decl"
+  pretty SyntaxForThisIsNotClearYet = "decl"
