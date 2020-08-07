@@ -1,2 +1,2 @@
 language="haskell"
-run="cabal v1-run exe:ReaCSS"
+run=". script/run.sh"

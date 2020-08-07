@@ -6,9 +6,11 @@ Reactive Programming with CSS-like Selectors
 
 ### How to Execute
 
-1. Run `cabal v1-sandbox init` (if there is no `.cabal-sandbox` directory)
-1. Run `cabal v1-update`
-1. Run `cabal v1-run ReaCSS`
+#### Using repl.it
+1. Click `Run` button on repl.it
+
+#### Using local machine
+1. Run `. script/run.sh`
 
 ### FAQ
 
