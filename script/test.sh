@@ -1,0 +1,1 @@
+cabal v1-test --show-details=streaming --test-options="--color always"
