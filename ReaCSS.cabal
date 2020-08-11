@@ -2,8 +2,8 @@ cabal-version:  2.4
 name:           ReaCSS
 version:        0.1.0.0
 category:       Web
-homepage:       https://github.com/ReaCSS/ReaCSS#readme
-bug-reports:    https://github.com/ReaCSS/ReaCSS/issues
+homepage:       https://github.com/ReaCSS/ReaCSS-replit#readme
+bug-reports:    https://github.com/ReaCSS/ReaCSS-replit/issues
 author:         Jaewon Seo
                 Junyoung Clare Jang
 maintainer:     jjc9310@gmail.com
@@ -16,7 +16,7 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/ReaCSS/ReaCSS
+  location: https://github.com/ReaCSS/ReaCSS-replit
 
 library
   exposed-modules:
