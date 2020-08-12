@@ -36,16 +36,11 @@ compileReaXMLNode (ReaXMLTextNode text) = compileReaXMLText text
 
 compileReaXMLElement :: Compiler ReaXMLElement
 compileReaXMLElement ReaXMLElement{..}
-  | "q" `isPrefixOf` reaXMLElementName
-    = "(function(){"
-    <> "var n=document.createElement(" <> dquotes (pretty reaHTMLElementName) <> ");"
-    <> hcat ((<> ";") . compileReaXMLAttribute <$> reaXMLElementAttributes)
-    <> compileReaXMLTree reaXMLElementChildren
-    <> "})();"
-  | otherwise
-    = "(function(){throw new Error(\"Not yet implemented\");})();"
-  where
-    reaHTMLElementName = drop 1 reaXMLElementName
+  = "(function(){"
+  <> "var n=document.createElement(" <> dquotes (pretty reaXMLElementName) <> ");"
+  <> hcat ((<> ";") . compileReaXMLAttribute <$> reaXMLElementAttributes)
+  <> compileReaXMLTree reaXMLElementChildren
+  <> "})();"
 
 compileReaXMLAttribute :: Compiler ReaXMLAttribute
 compileReaXMLAttribute ReaXMLAttribute{..}
