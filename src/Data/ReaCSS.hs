@@ -41,6 +41,7 @@ type ReaCSSName = String
 instance Pretty ReaCSS where
   pretty (ReaCSS rules)
     = concatWith (\x y -> x <> hardline <> hardline <> y) (pretty <$> rules)
+    <> hardline
 
 instance Pretty ReaCSSRule where
   pretty ReaCSSRule{..}

@@ -44,7 +44,7 @@ type ReaXMLValue = String
 
 -- Pretty printers
 instance Pretty ReaXML where
-  pretty (ReaXML reaXMLTree) = vsep (pretty <$> reaXMLTree)
+  pretty (ReaXML reaXMLTree) = vsep (pretty <$> reaXMLTree) <> hardline
 
 instance Pretty ReaXMLNode where
   pretty (ReaXMLTextNode reaXMLText) = pretty reaXMLText
