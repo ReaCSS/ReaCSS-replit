@@ -1,8 +1,8 @@
 module Main where
 
 import Data.ByteString.Lazy (ByteString)
-import Parser.ReaCSS
-import Parser.ReaXML
+import Data.Text (Text)
+import Parser
 import Test.Tasty
 import Test.Tasty.Golden
 import Text.Megaparsec
@@ -26,31 +26,27 @@ parserTests
     , golden "reacss0.txt" "reacss0.reprinted.txt" (testParserWithFile reaCSS)
     ]
   where
-    testParserWithFile :: (Pretty a) => Parser a -> FilePath -> FilePath -> IO ByteString
+    testParserWithFile :: (Pretty a) => Parser a -> FilePath -> FilePath -> IO Text
     testParserWithFile p fp _ = do
       str <- readFile fp
-      case parse p fp str of
-        Left err ->
-          pure
-          . BSL.fromStrict
-          . TE.encodeUtf8
-          . T.pack
-          $ show err
-        Right v ->
-          pure
-          . BSL.fromStrict
-          . TE.encodeUtf8
-          . renderStrict
-          . layoutPretty defaultLayoutOptions
-          $ pretty v
+      pure $ parseAndSerialize p fp str
 
-golden :: FilePath -> FilePath -> (FilePath -> FilePath -> IO ByteString) -> TestTree
+    parseAndSerialize :: (Pretty a) => Parser a -> String -> String -> Text
+    parseAndSerialize p name str
+      = case parse p name str of
+          Left err -> T.pack $ show err
+          Right v -> renderStrict . layoutPretty defaultLayoutOptions $ pretty v
+
+golden :: FilePath -> FilePath -> (FilePath -> FilePath -> IO Text) -> TestTree
 golden inputFn outputFn writing
   = goldenVsStringDiff
     (testFixturePath inputFn)
     goldenGitDiff
     (testFixturePath outputFn)
-    (writing (testFixturePath inputFn) (testFixturePath outputFn))
+    ( BSL.fromStrict
+      . TE.encodeUtf8
+      <$> writing (testFixturePath inputFn) (testFixturePath outputFn)
+    )
   where
     goldenGitDiff :: FilePath -> FilePath -> [String]
     goldenGitDiff ref new
