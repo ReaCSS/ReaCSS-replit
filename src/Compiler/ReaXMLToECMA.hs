@@ -44,7 +44,7 @@ compileReaXMLElement ReaXMLElement{..}
 
 compileReaXMLAttribute :: Compiler ReaXMLAttribute
 compileReaXMLAttribute ReaXMLAttribute{..}
-  = "n.setAttribute(" <> pretty reaXMLAttributeName <> "," <> pretty reaXMLAttributeValue <> ")"
+  = "n.setAttribute(" <> dquotes (pretty reaXMLAttributeName) <> "," <> dquotes (pretty reaXMLAttributeValue) <> ")"
 
 compileReaXMLText :: Compiler ReaXMLText
 compileReaXMLText text = "document.createTextNode(" <> dquotes (pretty text) <> ")"
