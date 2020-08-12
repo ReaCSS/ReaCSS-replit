@@ -22,12 +22,12 @@ tests = testGroup "ReaCSS" [parserTests]
 parserTests :: TestTree
 parserTests
   = testGroup "Parser"
-    [ golden "test/fixture/reaxml0.txt" (testParserWithFile reaXML)
-    , golden "test/fixture/reacss0.txt" (testParserWithFile reaCSS)
+    [ golden "reaxml0.txt" "reaxml0.reprinted.txt" (testParserWithFile reaXML)
+    , golden "reacss0.txt" "reacss0.reprinted.txt" (testParserWithFile reaCSS)
     ]
   where
-    testParserWithFile :: (Pretty a) => Parser a -> FilePath -> IO ByteString
-    testParserWithFile p fp = do
+    testParserWithFile :: (Pretty a) => Parser a -> FilePath -> FilePath -> IO ByteString
+    testParserWithFile p fp _ = do
       str <- readFile fp
       case parse p fp str of
         Left err ->
@@ -44,11 +44,17 @@ parserTests
           . layoutPretty defaultLayoutOptions
           $ pretty v
 
-golden :: FilePath -> (FilePath -> IO ByteString) -> TestTree
-golden fp writing = goldenVsStringDiff fp goldenGitDiff (goldenPathOf fp) (writing fp)
+golden :: FilePath -> FilePath -> (FilePath -> FilePath -> IO ByteString) -> TestTree
+golden inputFn outputFn writing
+  = goldenVsStringDiff
+    (testFixturePath inputFn)
+    goldenGitDiff
+    (testFixturePath outputFn)
+    (writing (testFixturePath inputFn) (testFixturePath outputFn))
   where
-    goldenPathOf :: FilePath -> FilePath
-    goldenPathOf = (<> ".golden")
-
     goldenGitDiff :: FilePath -> FilePath -> [String]
-    goldenGitDiff ref new = ["git", "diff", "--no-index", "--text", "--exit-code", ref, new]
+    goldenGitDiff ref new
+      = ["git", "diff", "--no-index", "--text", "--exit-code", ref, new]
+
+testFixturePath :: FilePath -> FilePath
+testFixturePath = ("test/fixture/" <>)

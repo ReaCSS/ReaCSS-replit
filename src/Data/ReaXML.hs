@@ -55,26 +55,20 @@ instance Pretty ReaXMLElement where
     = if null reaXMLElementChildren
       then
         sep
-        [ "<" <> pretty reaXMLElementName
-        , indent 2 attributes
+        [ nest 2 . sep $
+            ("<" <> pretty reaXMLElementName) : (pretty <$> reaXMLElementAttributes)
         , "/>"
         ]
       else
         vsep
         [ cat
-          [
-            sep
-            [ "<" <> pretty reaXMLElementName
-            , indent 2 attributes
-            ]
+          [ nest 2 . sep $
+              ("<" <> pretty reaXMLElementName) : (pretty <$> reaXMLElementAttributes)
           , ">"
           ]
-        , indent 2 children
+        , indent 2 . vsep $ pretty <$> reaXMLElementChildren
         , "</" <> pretty reaXMLElementName <> ">"
         ]
-    where
-      attributes = sep (pretty <$> reaXMLElementAttributes)
-      children = vsep (pretty <$> reaXMLElementChildren)
 
 instance Pretty ReaXMLAttribute where
   pretty ReaXMLAttribute{..}

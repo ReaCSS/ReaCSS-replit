@@ -1,0 +1,46 @@
+#input { decl; } { decl; } { } { decl; decl; decl; } #output
+
+#other
+{ }
+{ }
+{ }
+{ }
+{ decl; }
+{ decl; decl; }
+{ decl; }
+{ decl; }
+{ decl; decl; }
+{
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+  decl;
+}
+{ decl; decl; decl; decl; decl; decl; }
+{ }
+{ }
+#another

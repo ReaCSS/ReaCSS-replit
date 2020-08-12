@@ -34,6 +34,7 @@ reaCSSBlock = do
 
 reaCSSDeclaration :: Parser ReaCSSDeclaration
 reaCSSDeclaration = do
+  _ <- identifier
   skipMany $ noneOf [openCurlyBraceToken, semicolonToken, closeCurlyBraceToken]
   pure SyntaxForThisIsNotClearYet
 

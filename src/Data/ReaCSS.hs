@@ -44,11 +44,11 @@ instance Pretty ReaCSS where
 
 instance Pretty ReaCSSRule where
   pretty ReaCSSRule{..}
-    = sep
-      ( [pretty reaCSSRuleFromSelector]
-      <> (pretty <$> reaCSSRuleBlocks)
-      <> [pretty reaCSSRuleToSelector]
-      )
+    = sep . mconcat $
+      [ [pretty reaCSSRuleFromSelector]
+      , pretty <$> reaCSSRuleBlocks
+      , [pretty reaCSSRuleToSelector]
+      ]
 
 instance Pretty ReaCSSSelector where
   pretty (ReaCSSIdSelector idSelector) = "#" <> pretty idSelector
@@ -57,8 +57,7 @@ instance Pretty ReaCSSSelector where
 instance Pretty ReaCSSBlock where
   pretty (ReaCSSBlock decls)
     = sep
-      [ "{"
-      , indent 2 (sep (punctuate ";" (pretty <$> decls)))
+      [ nest 2 . sep $ "{" : ((<> ";") . pretty <$> decls)
       , "}"
       ]
 

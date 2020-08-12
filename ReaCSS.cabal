@@ -33,6 +33,7 @@ library
       src
   build-depends:
       base ^>= 4.12
+    , extra ^>= 1.7.4
     , megaparsec ^>= 8.0
     , mtl ^>= 2.2.2
     , parser-combinators ^>= 1.2.1

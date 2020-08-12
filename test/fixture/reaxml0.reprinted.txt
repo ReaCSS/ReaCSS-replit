@@ -1,11 +1,11 @@
-<ReaXML   >
-  <Hi    />
-  <Text   >
+<ReaXML>
+  <Hi />
+  <Text>
     This is a TextNode
   </Text>
-  <NoWay   value="work" />
-  <Nested   node="check">
-    <OneMOUR   inner="Noode">
+  <NoWay value="work" />
+  <Nested node="check">
+    <OneMOUR inner="Noode">
       <YAS
         NOOD="NOOD"
         with="really"
@@ -24,9 +24,8 @@
     bard="tarte"
     what="a delicious!"
   >
-    <OtherText   >
+    <OtherText>
       Text Text Text
-          
     </OtherText>
   </How>
 </ReaXML>

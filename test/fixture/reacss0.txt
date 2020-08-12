@@ -8,3 +8,19 @@
   There is three!
 }
 #output
+
+#other
+{}
+{}
+{}
+{}
+{many;}
+{many; many}
+{really}
+{too}
+{many; decls;}
+{Could; you; handle; them; all; including; this; super; duper; crazy; long; decl; you; have; never; seen; before; and; will; never; after; and; and; and; and; and; and; ever; }
+{I; do; not; think; so; LoL}
+{}
+{}
+#another

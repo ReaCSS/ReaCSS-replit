@@ -1,6 +1,7 @@
 module Parser.Lexer where
 
 import Control.Monad
+import Data.List.Extra
 import Data.Void
 import Text.Megaparsec
 
@@ -13,7 +14,7 @@ identifier :: Parser String
 identifier = (:) <$> TM.letterChar <*> many TM.alphaNumChar
 
 encodedString1 :: Parser String
-encodedString1 = some $ noneOf [openAngularBraceToken, closeAngularBraceToken]
+encodedString1 = trim <$> some (noneOf [openAngularBraceToken, closeAngularBraceToken])
 
 quotedString :: Parser String
 quotedString = qString doubleQuoteToken <|> qString singleQuoteToken
